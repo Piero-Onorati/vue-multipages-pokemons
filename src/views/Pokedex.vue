@@ -8,7 +8,6 @@
   <FilterBox/>
   <div class="container">
     <div class="all-pokemon">
-      
       <div v-for="pokemon in pokemons" :key="pokemon.id" class="pokemon">
         <PokeCard :pokemon="pokemon"/>
       </div>
@@ -51,42 +50,47 @@ export default {
             axios
             .get(`https://pokeapi.co/api/v2/pokemon/${index}`)
             .then(response=>{
-                this.pokemon = {
-                    name:response.data.name,
-                    id: response.data.id,
-                    image: response.data.sprites['front_default'],
-                }
-                // console.log(response.data);  
+              this.pokemon = {
+                  image: response.data.sprites['front_default'],
+                  id: response.data.id,
+                  name:response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1).toLowerCase(),
+                  type:response.data.types.map(element=>{
+                    return element.type['name'].toUpperCase()
+                  }),
+                  abilities:response.data.abilities.map(element=>{
+                    return element.ability['name']
+                    }),
+                  height:response.data.height,
+                  weight:response.data.weight,
+              }
+              console.log(this.pokemon);  
                 
             })
             .catch(error=>{
-                console.log(error)
+              console.log(error)
             })
             .finally(()=>{
-                if (!this.pokemons.includes(this.pokemon)) {
-                    this.pokemons.push(this.pokemon);
-                    
-                }
+              if (!this.pokemons.includes(this.pokemon)) {
+                  this.pokemons.push(this.pokemon);
+                  
+              }
             });
             
         }
                   
       })
                    
-
-    
-
     }
 
-
 }
+
 </script>
 
 <style lang="scss" scoped>
 
 .page{
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #313131;
   background: repeating-linear-gradient( -45deg, #2f2f2f, #2f2f2f 11px, #313131 11px, #313131 55px );
 
@@ -104,15 +108,15 @@ export default {
 
       
     .all-pokemon {
+      background-color: #fff;
       width: 70%;
       margin:0 auto;
       display: flex;
       flex-flow: row wrap;
 
       .pokemon{
-        width: calc(100% / 4);
-        border: 2px solid white;
-        background-color: whitesmoke;
+        width: calc((100% / 4) - 20px);
+        margin:10px;
       }
 
     }
