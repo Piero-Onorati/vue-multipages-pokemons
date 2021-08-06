@@ -89,17 +89,11 @@ export default {
 <style lang="scss" scoped>
 
 .page{
-  width: 100%;
-  min-height: 100vh;
-  background-color: #313131;
-  background: repeating-linear-gradient( -45deg, #2f2f2f, #2f2f2f 11px, #313131 11px, #313131 55px );
 
   .container{
-    background-color: #ffffff;
-    background: repeating-linear-gradient( -45deg, #f5f5f5, #f5f5f5 11px, #ffffff 11px, #ffffff 55px );
 
     .small-container{
-      padding-top: 100px;
+      padding-top: 130px;
       background-color: #ffffff;
     }
   }

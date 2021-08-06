@@ -11,11 +11,20 @@
 .container{
     width:80%;
     margin:0 auto;
+    background-color: #ffffff;
+    background: repeating-linear-gradient( -45deg, #f5f5f5, #f5f5f5 11px, #ffffff 11px, #ffffff 55px );
 }
 
 .small-container{
     width: 70%;
     margin:0 auto;
+}
+
+.page{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #313131;
+    background: repeating-linear-gradient( -45deg, #2f2f2f, #2f2f2f 11px, #313131 11px, #313131 55px );
 }
 
 // Buttons class
@@ -100,4 +109,22 @@
 .WATER{
     background-color: #2e91d3;
     color:white;
+}
+
+.COLORLESS{
+    background-color: #e2e2e2;
+}
+
+.DARKNESS{
+    background-color: #230130;
+    color:white
+}
+
+.LIGHTNING{
+    background-color: rgb(248, 255, 194);
+}
+
+.METAL{
+    background-color: #515e69;
+    color:white
 }

@@ -1,58 +1,61 @@
 <template>
-  <section>
-    <h2>all the cards</h2>
+  <div class="page">
 
-  <button @change="showCard"> 
-      <input class="hide" type="radio" id="normal" value="Normal" v-model="checkedNames">
-      <label for="normal">Normal</label>
-  </button>
-  
-  <button v-for="(item,index) in subtypes" :key="index" @change="showCard">     
-      <input class="hide" type="radio" :id="index" :value="item" v-model="checkedNames">
-      <label :for="index">{{item}}</label>
-  </button>
+    <div class="container">
 
-  <span>Checked names: {{ checkedNames }}</span>
+      <div class="small-container">
+        <h2>GCC POKÉMON</h2>
+      </div>
 
-  <div class="all-filters">
+      <div class="select">
 
-  <select v-model="selectRarity">
-      <option value="All">All</option>
-      <option  v-for="(rarity,index) in rarities" :key="'b'+ index">{{rarity}}</option>
-  </select>
-  <span>Checked names: {{ selectRarity}}</span>
+        <div class="select-container">
 
-  <input type="text" placeholder="Search a card..." v-model="search">
+          <div class="message">
+            <h3>Scegli il Subtype per la ricerca delle Cards</h3>
+          </div>
 
-  <select  v-model="selectType">
-      <option value="All">All</option>
-      <option v-for="(type,index) in types" :key="'c'+ index">{{type}}</option>
-  </select>
+          <div class="all-subtypes">
+            <button @change="showCard" class="btn-grad "> 
+              <input class="hide " type="radio" id="normal" value="Normal" v-model="checkedNames">
+              <label for="normal">Normal</label>
+            </button>
 
-  <span>Checked names: {{selectType}}</span>
-  </div>
+            <button v-for="(item,index) in subtypes" :key="index" @change="showCard" class="btn-grad ">     
+              <input class="hide " type="radio" :id="index" :value="item" v-model="checkedNames">
+              <label :for="index">{{item}}</label>
+            </button>
+          </div>
 
-  <div class="all-cards">
-  
-    <div v-for="card in filteredCards" :key="card.id" class="card">
-        <img :src="card.images['small']" alt="">
-        <h3>{{card.name}}</h3>
-        <h4>{{card.rarity}}</h4>
-        <h4 v-for="(item,index) in card.types" :key="'e'+ index">{{item}}</h4>
-        <h4>{{card.supertype}}</h4>
+        </div>
+
+      </div>
+
+      <FilterCards @changeType="receivedType" @changeRarity="receivedRarity" @sendWord="receivedSearch"/>
+      
+
+      <div class="all-cards">
+        <Card  v-for="card in filteredCards" :key="card.id" :details="card"/>
+      </div>
+
     </div>
-  
+
   </div>
-  </section>
 </template>
 
 <script>
 import axios from 'axios';
+import Card from '@/components/Card.vue';
+import FilterCards from '@/components/FilterCards.vue';
+
+
 export default {
+  components:{
+    Card,
+    FilterCards
+  },
   data(){
     return{
-      checkedNames:'',
-      cards:[],
       subtypes:[
           "Baby",
           "Basic",
@@ -77,94 +80,94 @@ export default {
           "V",
           "VMAX"
       ],
-      search:'',
-      rarities:[],
+      cards:[],
+      checkedNames:'',
       selectRarity:'',
-      URLRarities:"https://api.pokemontcg.io/v2/rarities",
-      URLTypes:"https://api.pokemontcg.io/v2/types",
       selectType:'',
-      types:[]
-
+      search:''
     }
   },
 
   computed : {
+
     filteredCards : function (){
-        return this.filterByWord(this.filterByType(this.filterByRarity(this.cards)));
+      return this.filterByWord(this.filterByType(this.filterByRarity(this.cards)));
     }
   },
 
-  mounted(){
-    axios
-      .get(this.URLRarities)
-      .then(response=>{
-          console.log(response.data.data);
-          this.rarities=response.data.data
-          console.log(this.rarities);
-      });
-
-    axios
-    .get(this.URLTypes)
-    .then(response=>{
-      console.log(response.data.data);
-      this.types=response.data.data
-      console.log(this.types);
-    });
-    
-  },
 
   methods:{
+
+    // method that show the card based on the subtypes choosen
     showCard(){
-        if (this.checkedNames =='Normal') {
-            axios
-                .get("https://api.pokemontcg.io/v2/cards")
-                .then(response=>{
-                    console.log(response.data.data);
-                    this.cards=response.data.data;
-                    console.log(this.cards); 
-                });
-                this.selectRarity='';
-                this.selectType='';
+      if (this.checkedNames =='Normal') {
+        axios
+          .get("https://api.pokemontcg.io/v2/cards")
+          .then(response=>{
+            console.log(response.data.data);
+            this.cards=response.data.data;
+            console.log(this.cards); 
+          });
+          this.selectRarity='';
+          this.selectType='';
 
-            
-        }else{
+          
+      }else{
 
-            axios
-                .get(`https://api.pokemontcg.io/v2/cards?q=subtypes:${this.checkedNames}&orderBy=-set.releaseDate`)
-                .then(response=>{
-                    console.log(response.data.data);
-                    this.cards=response.data.data
-                    console.log(this.cards);
-                });
-                this.selectRarity='';
-                this.selectType='';
-        }
+        axios
+          .get(`https://api.pokemontcg.io/v2/cards?q=subtypes:${this.checkedNames}&orderBy=-set.releaseDate`)
+          .then(response=>{
+            console.log(response.data.data);
+            this.cards=response.data.data
+            console.log(this.cards);
+          });
+          this.selectRarity='';
+          this.selectType='';
+      }
     
     },
 
+    // method that assaign the V-model rarity send through emit at selectRarity
+    receivedRarity(arg1){
+      this.selectRarity = arg1;
+    },
+
+    // method that assaign the V-model type send through emit at selectType
+    receivedType(arg2){
+      this.selectType = arg2;
+    },
+
+    // method that assaign the V-model searchWord send through emit at search
+    receivedSearch(arg3){
+      this.search = arg3;
+    },
+
+    // method that filter the cards based on rarity
     filterByRarity(array){
-        return array.filter(element =>{
-            if (this.selectRarity == '' || this.selectRarity == 'All') {
-                return array
-            }
-            else{
-                return element.rarity == this.selectRarity
-            }
-            
-        });
+      return array.filter(element =>{
+        if (this.selectRarity == '' || this.selectRarity == 'All') {
+          return array
+        }
+        else{
+          return element.rarity == this.selectRarity
+        }
+          
+      });
     },
 
+    // method that filter the cards based on type
     filterByType(array){
-        return array.filter(element =>{
-            const set1 = new Set(element.types);
-            if (set1.has(this.selectType)) {
-              return element
-            }else if(this.selectType ==''|| this.selectType =='All'){
-              return array
-            }
-        });
+      return array.filter(element =>{
+        const set1 = new Set(element.types);
+        if (set1.has(this.selectType)) {
+          return element
+        }else if(this.selectType ==''|| this.selectType =='All'){
+          return array
+        }
+      });
     },
 
+    // method that filter the cards based on word searched
     filterByWord(array){
       return array.filter((element)=>{
         return element.name.toLowerCase().match(this.search.toLowerCase())
@@ -179,47 +182,78 @@ export default {
 
 <style lang="scss" scoped>
 
-section{
-  padding-top:100px;
+.page{
 
-   .all-cards{
-      background-color: tomato;
-      width:75%;
-      margin: 0 auto;
+  .container{
+
+    .small-container{
+      padding-top: 130px;
+      background-color: #ffffff;
+    }
+
+    .select{
+      background-color: #616161;
+
+      .select-container{
+        padding-top: 30px;
+        width: 70%;
+        margin:0 auto;
+
+        .message{
+          width: calc(100% / 2);
+          text-align: center;
+          color:#fff;
+          background-color: #4dad5b;
+          border-radius:5px;
+          padding:  10px;
+        }
+
+        .all-subtypes{
+          display: flex;
+          flex-flow: row wrap;
+          padding: 20px 0;
+         
+         .btn-grad {background-image: linear-gradient(to right, #ECE9E6 0%, #FFFFFF  51%, #ECE9E6  100%)}
+         .btn-grad {
+            margin: 10px;
+            padding: 10px 20px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: darkgray;            
+            box-shadow: 0 0 5px #eee;
+            border-radius: 10px;
+            display: block;
+
+            input.hide{
+              display: none;
+            }
+          }
+
+          .btn-grad:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: gray;
+            text-decoration: none;
+          }
+         
+        }
+
+      }
+
+    }
+
+    .all-cards {
+      min-height: 200px;
+      background-color: #fff;
+      width: 70%;
+      margin:0 auto;
       display: flex;
       flex-flow: row wrap;
-      .card{
-        margin: 0 10px;
-        width: calc((100% / 5) - 20px);
-
-        img{
-          width:100%;
-        }
-          
-      }
+    }
 
     
-    }
-
-    .all-filters{
-      background-color: bisque;
-      padding: 50px 0;
-      width:100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-
-      
-      input.hide{
-          display: none;
-      }
-
-      button{
-          padding: 5px 10px;
-          margin:10px
-      }
-
-    }
+  }
 
 }
 

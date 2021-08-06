@@ -1,9 +1,24 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link :to="{name: 'Pokedex'}">Pokédex</router-link>
-      <router-link :to="{name: 'GCCPokemon'}">GCCPokemon</router-link>
+      <router-link to="/">
+        <div class="nav-item">
+          <img src="@/assets/img/icons8-pokemon.gif" alt="">
+          <span>Home</span> 
+        </div>
+      </router-link>
+      <router-link :to="{name: 'Pokedex'}">
+        <div class="nav-item">
+          <img src="@/assets/img/icons8-pokedex-100.png" alt="">
+          <span>Pokédex</span> 
+        </div>
+      </router-link>
+      <router-link :to="{name: 'GCCPokemon'}">
+        <div class="nav-item">
+          <img src="@/assets/img/icons8-pokebag-100.png" alt="">
+          <span>GCCPokemon</span> 
+        </div>
+      </router-link>
     </div>
     <router-view/>
   </div>
@@ -18,21 +33,41 @@
 }
 
 #nav {
-   text-align: center;
+  display:flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   width:100%;
   position: fixed;
+  z-index: 10;
   top:0%;
   left:0%;
-  padding: 20px 0;
+  padding-top: 15px;
+
 
   a {
     font-weight: bold;
-    padding: 0 10px;
+    padding: 0 10px 10px 10px;
     color: #2c3e50;
-
+    display:inline-block;
+    text-decoration: none;
+    
     &.router-link-exact-active {
       color: #42b983;
+      border-bottom: 4px solid #42b983;
+
+    }
+  }
+
+  .nav-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+
+    img{
+      width: 30px;
+      margin-bottom: 5px;
     }
   }
 }
