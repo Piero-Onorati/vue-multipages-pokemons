@@ -1,10 +1,14 @@
 <template>
     <div  class="card">
-        <img :src="details.images['small']" :alt="details.name">
-        <h3>{{details.name}}</h3>
-        <h4>{{details.rarity}}</h4>
-        <span class="type" v-for="(item,index) in details.types" :key="'e'+ index" :class="item.toUpperCase()">{{item.toUpperCase()}}</span>
-        <h4 class="supertype">{{details.supertype}}</h4>
+        <div class="card-img">
+            <img :src="details.images['small']" :alt="details.name">
+        </div>
+        <div class="info-card">
+            <h3>{{details.name}}</h3>
+            <h4>{{details.rarity}}</h4>
+            <span class="type" v-for="(item,index) in details.types" :key="'e'+ index" :class="item.toUpperCase()">{{item.toUpperCase()}}</span>
+            <h4 class="supertype">{{details.supertype}}</h4>
+        </div>
     </div>
 </template>
 
@@ -23,56 +27,50 @@ export default {
     position: relative;
     width: calc((100% / 4) - 30px);
     margin:15px;
+    border-radius:10px;
+    cursor: pointer;
 
-    img{
-        width:100%
+    .card-img{
+        width:100%;
+        height: 280px;
+        border-radius:10px;
+        overflow: hidden;
+
+        img{
+            width:100%;
+            height:100%
+        }
+
     }
+
+        
+    &:hover .card-img{
+        transform: scale(1.03);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12)
+    }
+
+    .info-card{
+        text-align: center;
+        padding-top:20px;
+
+        .type{
+            font-size:14px;
+            border-radius:5px;
+            padding: 0px 6px;
+            margin: 0 5px;
+        }
     
-    &:after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
-        background-repeat: no-repeat;
-        opacity: .5;
-        mix-blend-mode: color-dodge;
-        transition: all .33s ease;
+        .supertype{
+            font-size: 16px;
+            font-style: italic;
+        }
     }
+
+
+  
+
     
-    &:after {
-        opacity: 1;
-        background-image: url("https://assets.codepen.io/13471/sparkles.gif"), 
-        url(https://assets.codepen.io/13471/holo.png), 
-        linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
-        background-position: 50% 50%;
-        background-size: 160%;
-        background-blend-mode: overlay;
-        z-index: 2;
-        filter: brightness(1) contrast(1);
-        transition: all .33s ease;
-        mix-blend-mode: color-dodge;
-        opacity: .75;
-    }
 
-    &:hover:after {
-        filter: brightness(1) contrast(1);
-        opacity: 1;
-    }
-
-    .type{
-        font-size:14px;
-        border-radius:5px;
-        padding: 0px 6px;
-        margin-right: 10px;
-
-    }
-
-    .supertype{
-        font-size: 16px;
-        font-style: italic;
-    }
 
 }
 

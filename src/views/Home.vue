@@ -1,19 +1,14 @@
 <template>
   <div class="page">
-      <div class="home">
-        <img src="../assets/img/gotta-catch-em-all-transparent-pokemon-logo-11.png" alt="">
-      </div>
-  
+    <div class="home">
+      <img src="../assets/img/gotta-catch-em-all-transparent-pokemon-logo-11.png" alt="">
+    </div>
+
   </div>
 </template>
-
 <script>
 
-export default {
-  name: 'Home',
-  components: {
-  }
-}
+
 </script>
 
 <style lang="scss" scoped>
@@ -31,6 +26,7 @@ export default {
     width: 400px;
 
   }
+
 }
 
 

@@ -35,6 +35,9 @@
       
 
       <div class="all-cards">
+        <div class="reset">
+          <button @click="reset">reset</button>
+        </div>
         <Card  v-for="card in filteredCards" :key="card.id" :details="card"/>
       </div>
 
@@ -89,7 +92,6 @@ export default {
   },
 
   computed : {
-
     filteredCards : function (){
       return this.filterByWord(this.filterByType(this.filterByRarity(this.cards)));
     }
@@ -172,10 +174,16 @@ export default {
       return array.filter((element)=>{
         return element.name.toLowerCase().match(this.search.toLowerCase())
       });
+    },
+
+    // method to reset all filters
+    reset(){
+      this.selectRarity ='';
+      this.selectType = '';
+      this.search = '';
     }
 
   }
-
 
 }
 </script>
@@ -189,6 +197,13 @@ export default {
     .small-container{
       padding-top: 130px;
       background-color: #ffffff;
+
+        h2{
+        font-size: 30px;
+        font-weight:400;
+        padding-bottom: 10px;
+        color:#919191;
+      }
     }
 
     .select{
@@ -221,10 +236,12 @@ export default {
             text-transform: uppercase;
             transition: 0.5s;
             background-size: 200% auto;
-            color: darkgray;            
+            color: gray;            
             box-shadow: 0 0 5px #eee;
             border-radius: 10px;
             display: block;
+            label{
+              font-weight: 500;}
 
             input.hide{
               display: none;
@@ -233,14 +250,11 @@ export default {
 
           .btn-grad:hover {
             background-position: right center; /* change the direction of the change here */
-            color: gray;
+            color: #313131;
             text-decoration: none;
           }
-         
         }
-
       }
-
     }
 
     .all-cards {
@@ -250,17 +264,25 @@ export default {
       margin:0 auto;
       display: flex;
       flex-flow: row wrap;
+
+      .reset{
+        width: 100%;
+        padding: 20px 20px 15px 0;
+        text-align: right;
+
+        button{
+          background-color: #30a7d7;
+          color:white;
+          padding: 5px 20px;
+          border-radius:5px;
+          text-transform: uppercase;
+          font-size: 18px;
+          border: none;
+          cursor: pointer;
+        }
+      }
     }
-
-    
   }
-
 }
-
-
-
-
-
-
 
 </style>

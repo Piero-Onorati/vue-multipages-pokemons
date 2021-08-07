@@ -3,19 +3,19 @@
     <div id="nav">
       <router-link to="/">
         <div class="nav-item">
-          <img src="@/assets/img/icons8-pokemon.gif" alt="">
+          <img src="@/assets/img/icons8-pokemon.gif" alt="pikachu-gif">
           <span>Home</span> 
         </div>
       </router-link>
       <router-link :to="{name: 'Pokedex'}">
         <div class="nav-item">
-          <img src="@/assets/img/icons8-pokedex-100.png" alt="">
+          <img src="@/assets/img/icons8-pokedex-100.png" alt="pokedex-icon">
           <span>Pokédex</span> 
         </div>
       </router-link>
       <router-link :to="{name: 'GCCPokemon'}">
         <div class="nav-item">
-          <img src="@/assets/img/icons8-pokebag-100.png" alt="">
+          <img src="@/assets/img/icons8-stella-pokemon-100.png" alt="star-icon">
           <span>GCCPokemon</span> 
         </div>
       </router-link>
@@ -24,8 +24,11 @@
   </div>
 </template>
 
+
 <style lang="scss">
 @import '@/style/commons.scss';
+
+
 
 #app {
   -webkit-font-smoothing: antialiased;

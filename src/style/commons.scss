@@ -1,5 +1,6 @@
 @import "~@fontsource/exo/index.css";
 @import "~@fontsource/exo/300.css";
+@import "~@fontsource/exo/500.css";
 
 *{
     margin:0;
@@ -25,6 +26,15 @@
     min-height: 100vh;
     background-color: #313131;
     background: repeating-linear-gradient( -45deg, #2f2f2f, #2f2f2f 11px, #313131 11px, #313131 55px );
+}
+
+button:hover{
+    cursor: pointer;
+    filter: brightness(0.9);
+}
+
+label:hover{
+    cursor: pointer;
 }
 
 // Buttons class

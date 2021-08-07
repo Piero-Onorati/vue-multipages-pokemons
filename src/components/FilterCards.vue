@@ -13,7 +13,7 @@
 
           <div class="search-word">
             <input type="text" placeholder="Search a card..." v-model="searchWord">
-            <button @click="$emit('sendWord', searchWord)">Search</button>
+            <button @click="submit">Search</button>
           </div>
 
           <select  v-model="type" @change="$emit('changeType', type)">
@@ -60,7 +60,12 @@ export default {
     });
   },
 
- 
+  methods:{
+    submit(){
+      this.$emit('sendWord', this.searchWord);
+      this.searchWord='';
+    }
+  }
 
 }
 </script>
@@ -83,7 +88,45 @@ export default {
   
         button{
           padding: 5px 10px;
-          margin:10px
+          margin:10px;
+
+        }
+
+        select{
+          border: 1px solid lightgray;
+          background-color: #333;
+          color: lightgray;
+          padding: 10px;
+          outline: none;
+          font-size: 1em;
+          border-radius: 3px;
+          transition: width .3s;
+          option{
+            font-family: "Exo";
+          }
+        }
+
+        .search-word{
+
+          input{
+            padding: 8px;
+            outline: none;
+            border:none;
+            font-size: 1em;
+            border-radius: 3px;
+          }
+
+          button{
+            background-color: #ee6b2f;
+            color: white;
+            margin-left: 10px;
+            border:none;
+            padding: 8px;
+            outline: none;
+            font-size: 1em;
+            border-radius: 3px;
+
+          }
         }
   
       }
