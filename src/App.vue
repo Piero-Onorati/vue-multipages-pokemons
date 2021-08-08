@@ -21,6 +21,20 @@
       </router-link>
     </div>
     <router-view/>
+
+    <footer>
+
+      <div class="social-icons">
+        <h4>Follow Pokémon on social</h4>
+        <div class="icons">
+          <img src="@/assets/img/social/email-icon.jpg" alt="email icon">
+          <img src="@/assets/img/social/instagram-icon.jpg" alt="instagram icon">
+          <img src="@/assets/img/social/twitch-icon.jpg" alt="twich icon">
+          <img src="@/assets/img/social/twitter-icon.jpg" alt="twitter icon">
+        </div>
+      </div>
+
+    </footer>
   </div>
 </template>
 
@@ -73,5 +87,39 @@
       margin-bottom: 5px;
     }
   }
+
+  
+}
+
+footer{
+  background-color: #1f1f1f;
+  display: flex;
+  align-items:center ;
+  justify-content: center;
+  padding: 50px 0;
+
+  .social-icons{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    h4{
+      color: white;
+      padding-bottom: 20px;
+    }
+
+    img{
+      width:50px;
+      filter: grayscale(100%);
+      margin: 0 10px;
+      cursor: pointer;
+
+      &:hover{
+        filter: grayscale(0%);
+
+      }
+    }
+  }
+
 }
 </style>

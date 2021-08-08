@@ -58,13 +58,14 @@ export default {
       this.list_length=response.data.count;
 
       console.log(this.list_length);
-      for (let index = 1; index <=  10; index++) {
+      for (let index = 1; index <= this.list_length; index++) {
 
           axios
           .get(`https://pokeapi.co/api/v2/pokemon/${index}`)
           .then(response=>{
             this.pokemon = {
                 image: response.data.sprites['front_default'],
+                img:response.data.sprites.other['official-artwork'].front_default,
                 id: response.data.id,
                 name:response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1).toLowerCase(),
                 type:response.data.types.map(element=>{
@@ -73,6 +74,13 @@ export default {
                 abilities:response.data.abilities.map(element=>{
                   return element.ability['name']
                   }),
+                move:response.data.moves[0].move.name,
+                stats:response.data.stats.map(element=>{
+                  return element.stat.name
+                }),
+                stats_number:response.data.stats.map(element=>{
+                  return element.base_stat
+                }),
                 height:response.data.height,
                 weight:response.data.weight,
             }
@@ -84,7 +92,7 @@ export default {
           })
           .finally(()=>{
             if (!this.pokemons.includes(this.pokemon)) {
-                this.pokemons.push(this.pokemon);
+              this.pokemons.push(this.pokemon);
                 
             }
           });
