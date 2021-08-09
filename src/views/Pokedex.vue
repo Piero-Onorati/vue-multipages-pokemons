@@ -1,20 +1,34 @@
 <template>
 <div class="page">
+
+  <!-- Title -->
   <div class="container">
     <div class="small-container">
       <h2>Pokédex</h2>
     </div>
   </div>
+
+  <!-- FilterBox for Pokémpn -->
   <FilterBox @choseType="receivedType" @sendSearchPoke="receivedSearchPoke"  @sendHeight="receivedHeight" @sendWeight="receivedWeight"/>
+
+  <!-- All Pokemons Box -->
   <div class="container">
-    <div class="all-pokemon">
+    <div class="all-pokemon" v-if="!loading">
+
+      <!-- 'Reset all filters' button -->
       <div class="reset">
         <button @click="reset">reset</button>
       </div>
+
+      <!-- Pokemon Card component -->
       <div v-for="pokemon in filteredPokemons" :key="pokemon.id" class="pokemon">
         <PokeCard :pokemon="pokemon" />
       </div>
+
     </div>
+
+    <!-- Loader -->
+    <Loader v-else/>
   </div>
 
 </div>
@@ -25,12 +39,14 @@
 import axios from 'axios';
 import FilterBox from '@/components/FilterBox.vue';
 import PokeCard from '@/components/PokeCard.vue';
+import Loader from '@/components/Loader.vue';
 
 export default {
   name: 'Pokedex',
   components: {
   FilterBox,
-  PokeCard
+  PokeCard,
+  Loader
   },
   data(){
     return{
@@ -41,7 +57,8 @@ export default {
       selectedType:'',
       selectedPoke:'',
       selectedHeight:'',
-      selectedWeight:''
+      selectedWeight:'',
+      loading:true
     }
   },
 
@@ -56,46 +73,46 @@ export default {
     .get(this.url)
     .then(response=>{
       this.list_length=response.data.count;
-
       console.log(this.list_length);
-      for (let index = 1; index <= this.list_length; index++) {
 
-          axios
-          .get(`https://pokeapi.co/api/v2/pokemon/${index}`)
-          .then(response=>{
-            this.pokemon = {
-                image: response.data.sprites['front_default'],
-                img:response.data.sprites.other['official-artwork'].front_default,
-                id: response.data.id,
-                name:response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1).toLowerCase(),
-                type:response.data.types.map(element=>{
-                  return element.type['name'].toUpperCase()
-                }),
-                abilities:response.data.abilities.map(element=>{
-                  return element.ability['name']
-                  }),
-                move:response.data.moves[0].move.name,
-                stats:response.data.stats.map(element=>{
-                  return element.stat.name
-                }),
-                stats_number:response.data.stats.map(element=>{
-                  return element.base_stat
-                }),
-                height:response.data.height,
-                weight:response.data.weight,
-            }
-            console.log(this.pokemon);  
-              
-          })
-          .catch(error=>{
-            console.log(error)
-          })
-          .finally(()=>{
-            if (!this.pokemons.includes(this.pokemon)) {
-              this.pokemons.push(this.pokemon);
-                
-            }
-          });
+      // Generate Pokedex
+      for (let index = 1; index <= this.list_length; index++) {
+        axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${index}`)
+        .then(response=>{
+          this.pokemon = {
+            image: response.data.sprites['front_default'],
+            img:response.data.sprites.other['official-artwork'].front_default,
+            id: response.data.id,
+            name:response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1).toLowerCase(),
+            type:response.data.types.map(element=>{
+              return element.type['name'].toUpperCase()
+            }),
+            abilities:response.data.abilities.map(element=>{
+              return element.ability['name']
+              }),
+            move:response.data.moves[0].move.name,
+            stats:response.data.stats.map(element=>{
+              return element.stat.name
+            }),
+            stats_number:response.data.stats.map(element=>{
+              return element.base_stat
+            }),
+            height:response.data.height,
+            weight:response.data.weight,
+          }
+          console.log(this.pokemon);  
+            
+        })
+        .catch(error=>{
+          console.log(error)
+        })
+        .finally(()=>{
+          if (!this.pokemons.includes(this.pokemon)) {
+            this.pokemons.push(this.pokemon);
+          }
+          this.loading=false;
+        });
           
       }
                 

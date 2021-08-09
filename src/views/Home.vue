@@ -1,9 +1,13 @@
 <template>
   <div class="page">
+
+    <!-- JUMBOTRON -->
     <div class="home">
       <img src="../assets/img/gotta-catch-em-all-transparent-pokemon-logo-11.png" alt="">
     </div>
+
     <div class="container">
+      <!-- SLIDERS for POKEMONS -->
       <vueper-slides
         fixed-height="250px"
         :bullets="false"
@@ -13,9 +17,13 @@
         <vueper-slide v-for="pokemon in pokemons" :key="pokemon.id" :title="pokemon.name" :image="pokemon.img" />
   
       </vueper-slides>
+
+      <!-- GRID LAYOUT for ARTICLES -->
       <div class="small-container">
         <GridLayout/>
       </div>
+
+      <!-- SLIDERS for CARDS -->
       <CardSliders :array="cards"/>
     </div>
 
@@ -50,21 +58,25 @@ export default {
   },
 
   mounted(){
+
+    // Get the total number of cards through axios:list_length 
    axios
     .get(this.url)
     .then(response=>{
       this.list_length=response.data.count;
-
       console.log(this.list_length);
 
+      // create an array(randNums) of 30 random Number from 1 to list_length
       while(this.randNums.length < 30){
+        // create a random number
         const randNum = Math.floor(Math.random() * this.list_length) + 1;
-  
+        // push it into the array
         if(!this.randNums.includes(randNum)) {
         this.randNums.push(randNum);
         }
       }
 
+      // For each random number generate an axios call to get all pokemons informations
       this.randNums.forEach(element => {
         axios
         .get(`https://pokeapi.co/api/v2/pokemon/${element}`)
@@ -83,19 +95,18 @@ export default {
                 
     });
     
-    
+
+    // Axios call for generating an array of cards
     axios
     .get(this.urlCard)
     .then(response=>{
       this.cards=response.data.data;
       console.log(this.cards);
-
     });
 
   }
 
 }
-
 
 </script>
 
@@ -115,11 +126,8 @@ export default {
   
     img{
       width: 400px;
-  
     }
-  
   }
-  
     
   .vueperslide{
     background-color: #525252;
@@ -129,8 +137,6 @@ export default {
     color: transparent;
     font-size: 32px;
     z-index:4;
-
-      
 
     &:hover{
       transform: scale(1.1);
@@ -149,14 +155,10 @@ export default {
       0.75px 0.75px  black,
       0.5px 0.5px    black,
       0.25px 0.25px  black;
-
     }
 
   }
  
 }
-
-
-
 
 </style>

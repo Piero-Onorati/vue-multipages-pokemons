@@ -1,19 +1,20 @@
 <template>
-   <section>
-       
+
+<section>
+
     <button><router-link :to="{name: 'GCCPokemon'}"><span>See all the cards</span></router-link></button>
-       <vueper-slides
-        fixed-height="290px"
-        :bullets="false"
-        class="no-shadow card-wrapper"
-        :visible-slides="6"
-        :gap="1"
-        :dragging-distance="70">
+
+    <vueper-slides
+    fixed-height="290px"
+    :bullets="false"
+    class="no-shadow card-wrapper"
+    :visible-slides="6"
+    :gap="1"
+    :dragging-distance="70">
         <vueper-slide v-for="item in array" :key="item.id" :image="item.images['small']" />
-  
     </vueper-slides>
 
-   </section>
+</section>
 
 </template>
 

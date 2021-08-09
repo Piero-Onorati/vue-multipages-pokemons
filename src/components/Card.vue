@@ -1,14 +1,23 @@
 <template>
     <div  class="card">
+
+        <!-- CARD IMG -->
         <div class="card-img">
             <img :src="details.images['small']" :alt="details.name">
         </div>
+
+        <!-- CARD INFO -->
         <div class="info-card">
-            <h3>{{details.name}}</h3>
-            <h4>{{details.rarity}}</h4>
+            <!-- NAME -->
+            <h3 class="card-name">{{details.name}}</h3>
+            <!-- RARITY -->
+            <h4 class="card-rarity">{{details.rarity}}</h4>
+            <!-- TYPE -->
             <span class="type" v-for="(item,index) in details.types" :key="'e'+ index" :class="item.toUpperCase()">{{item.toUpperCase()}}</span>
+            <!-- SUPERTYPE -->
             <h4 class="supertype">{{details.supertype}}</h4>
         </div>
+
     </div>
 </template>
 
@@ -40,9 +49,7 @@ export default {
             width:100%;
             height:100%
         }
-
     }
-
         
     &:hover .card-img{
         transform: scale(1.03);
@@ -53,6 +60,16 @@ export default {
         text-align: center;
         padding-top:20px;
 
+        .card-name{
+            color: black;;
+        }
+
+        .card-rarity{
+            color: #3e3e3e;
+            font-size: 14px;
+            padding: 3px 0 10px 0;
+        }
+
         .type{
             font-size:14px;
             border-radius:5px;
@@ -61,16 +78,12 @@ export default {
         }
     
         .supertype{
-            font-size: 16px;
+            font-size: 14px;
             font-style: italic;
+            color: dimgrey;
+            padding-top: 5px;
         }
     }
-
-
-  
-
-    
-
 
 }
 

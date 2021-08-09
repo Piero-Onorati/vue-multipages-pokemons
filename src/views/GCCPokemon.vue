@@ -1,48 +1,61 @@
 <template>
   <div class="page">
-
     <div class="container">
 
       <div class="small-container">
+        <!-- TITLE of the page -->
         <h2>GCC POKÉMON</h2>
       </div>
 
+      <!-- SELECT for SUBTYPES -->
       <div class="select">
 
         <div class="select-container">
-
+          <!-- Message -->
           <div class="message">
             <h3>Scegli il Subtype per la ricerca delle Cards</h3>
           </div>
 
+          <!-- All-subtypes -->
           <div class="all-subtypes">
+
+            <!-- Normal Button -->
             <button @change="showCard" class="btn-grad "> 
               <input class="hide " type="radio" id="normal" value="Normal" v-model="checkedNames">
               <label for="normal">Normal</label>
             </button>
 
+            <!-- All the others buttons -->
             <button v-for="(item,index) in subtypes" :key="index" @change="showCard" class="btn-grad ">     
               <input class="hide " type="radio" :id="index" :value="item" v-model="checkedNames">
               <label :for="index">{{item}}</label>
             </button>
-          </div>
 
+          </div>
         </div>
 
       </div>
 
+      <!-- FILTERS : for RARITY, SEARCH card, for TYPES -->
       <FilterCards @changeType="receivedType" @changeRarity="receivedRarity" @sendWord="receivedSearch"/>
-      
 
-      <div class="all-cards">
+      <!-- ALL CARDS CONTAINER -->
+      <div class="all-cards" v-if="!loadingCard">
+
+        <!-- 'Reset all filters' button  -->
         <div class="reset">
           <button @click="reset">reset</button>
         </div>
-        <Card  v-for="card in filteredCards" :key="card.id" :details="card"/>
+
+        <!-- CARD COMPONENT -->
+        <Card  v-for="card in filteredCards" :key="card.id" :details="card" />
+
       </div>
 
-    </div>
+      <!-- LOADER -->
+      <Loader2 v-else/>
 
+    </div>
   </div>
 </template>
 
@@ -50,12 +63,14 @@
 import axios from 'axios';
 import Card from '@/components/Card.vue';
 import FilterCards from '@/components/FilterCards.vue';
+import Loader2 from '@/components/Loader2.vue'
 
 
 export default {
   components:{
     Card,
-    FilterCards
+    FilterCards,
+    Loader2
   },
   data(){
     return{
@@ -87,7 +102,8 @@ export default {
       checkedNames:'',
       selectRarity:'',
       selectType:'',
-      search:''
+      search:'',
+      loadingCard:true
     }
   },
 
@@ -113,6 +129,7 @@ export default {
           this.selectRarity='';
           this.selectType='';
 
+          this.loadingCard=false;
           
       }else{
 
@@ -125,6 +142,7 @@ export default {
           });
           this.selectRarity='';
           this.selectType='';
+          this.loadingCard=false;
       }
     
     },
