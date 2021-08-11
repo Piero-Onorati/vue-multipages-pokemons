@@ -64,7 +64,7 @@
                     <!-- Details: height, weight, abilities and moves -->
                     <div class="details">
                         <!-- Height -->
-                        <h4>Altezza: <span class="numbers">{{pokemon.height}} dm</span></h4>
+                        <h4>Altezza: <span class="numbers" id="height">{{pokemon.height}} dm</span></h4>
                         <!-- Weight -->
                         <h4>Peso: <span class="numbers">{{pokemon.weight}} hg</span></h4>
                         <!-- Abilities -->
@@ -117,7 +117,6 @@ export default {
 <style lang="scss" scoped>
 
 .card{
-    cursor: pointer;
     background-color: #fff;
     .img-card{
         background-color: #f2f2f2;
@@ -170,6 +169,7 @@ export default {
         top:50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        z-index:4;
         img{
             width:40px
         }
@@ -180,23 +180,24 @@ export default {
         background-color: white;
         padding: 10px;
         border-radius:5px;
-        width: 900px;
+        width: 940px;
         position: fixed;
-        z-index:20;
+        z-index:500;
         top:50%;
         left: 50%;
         transform: translate(-50%,-50%);
         display: flex;
         align-items: center;
         background-image: url('../assets/img/new-pokemon.png');
-        background-size: 60%;
+        background-size: 70%;
         background-repeat: no-repeat;
         background-position: center right;
+        box-shadow: 0 1px 3px rgba(0,0,0, 0.12), 0 1px 2px rgba(0,0,0, 0.24) ;
          
 
         .modal-card-img{
-            width: 400px;
-            height: 400px;
+            width: 450px;
+            height: 450px;
             border-radius:5px;
             background-color: #f2f2f2;
             img{
@@ -205,7 +206,7 @@ export default {
         }
 
         .modal-card-text{
-            padding: 5px 15px;
+            padding: 5px 5px 5px 15px;
             border-radius: 5px ;
             display: flex;
             flex-direction: column;
@@ -219,6 +220,7 @@ export default {
                 align-items: flex-start;
 
                 .number_name{
+
                     .num{
                         font-weight: 500;
                         color: #3e3e3e;
@@ -244,7 +246,7 @@ export default {
             }
 
             .details{
-                margin: 10px 0;
+                margin: 50px 0 20px 0;
                 background-color:#cfd8dc88;
                 color:#3e3e3e;
                 border-radius: 5px ;
@@ -316,11 +318,11 @@ export default {
     position: fixed;
     top:0;
     left:0;
-    bottom:0;
-    right: 0;
+    width: 100vw;
+    height: 100vh;
     transition: 200ms ease-in-out;
     background-color: rgba(0,0,0, 0.5);
-    z-index: 15;
+    z-index: 45;
 }
 
 </style>
