@@ -227,7 +227,6 @@ export default {
 
   .container{
 
-      
     .all-pokemon {
       background-color: #fff;
       width: 70%;
@@ -255,7 +254,7 @@ export default {
 
       .pokemon{
         width: calc((100% / 4) - 20px);
-        margin:10px;
+        margin:15px 10px;
       }
 
     }
